@@ -13,8 +13,14 @@ class FeedbacksController < ApplicationController
     @feedback.skill =  params[:feedback][:skill]
     @feedback.behaviour=behaviour
     @feedback.additional =  params[:feedback][:additional]
-    @feedback.hire =  params[:feedback][:hire]
-  
+    @feedback.hire =  params[:feedback][:isHire]
+    @feedback.isCooper = params[:feedback][:isCooper]
+
+  if @feedback.valid?
+    puts "valid"
+  else
+    puts @feedback.errors.full_messages
+  end
 
   if @feedback.save
     render plain: "Successfully saved"
@@ -24,11 +30,12 @@ class FeedbacksController < ApplicationController
 
   end
   def index
-    @feedback = Feedback.all
+    @feedback =  Feedback.all
+    render plain: @feedback.inspect
   end
 
   def show
-    @feedback = Feedback.find(params[:id])
+    render plain: Feedback.all
   end
 
 private
